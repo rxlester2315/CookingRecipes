@@ -118,9 +118,15 @@ function getCart($user_id){
     global $conn;
 
     $stmt = $conn->prepare(
-        "SELECT c.*, r.recipename, r.price, r.recipeimage
+        "SELECT c.*, r.id, r.recipename, r.price, r.recipeimage, r.typeofdish
         FROM cart_items c
-        JOIN recipes r ON c.product_id = r.id
+        JOIN (
+        SELECT id, recipename, price, recipeimage, typeofdish FROM recipes
+        UNION ALL
+        SELECT id, desertname AS recipename, price, desertimage AS recipeimage, typeofdesert AS typeofdish FROM deserts
+
+           
+        ) r ON c.product_id = r.id
         WHERE c.user_id = ?"
     );
 
@@ -136,21 +142,23 @@ function getCart($user_id){
         $total += $item_total;
 
         $cart_items[] = [
-            'id' => $row['product_id'],
-            'recipename' => $row['recipename'],
+            'id' => $row['id'],
+            'recipename' => $row['recipename'],  // Holds both recipe and desert names
             'price' => $row['price'],
             'quantity' => $row['quantity'],
-            'recipeimage' => $row['recipeimage'],
+            'recipeimage' => $row['recipeimage'],  // Holds both recipe and desert images 
+             'typeofdish' => $row['typeofdish'],
             'item_total' => $item_total
+
         ];
     }
 
-    // Move this inside the function
     echo json_encode([
         'items' => $cart_items,
         'total' => $total
     ]);
 }
+
 
 
 

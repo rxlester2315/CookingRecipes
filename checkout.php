@@ -1,15 +1,3 @@
-<?php
-session_start();
-include('database.php');
-
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +11,6 @@ if (!isset($_SESSION['user_id'])) {
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <link rel="stylesheet" href="landing/css/templatemo-style.css?v=1.0">
-        <script src="script.js"></script>
 
 
         <style>
@@ -249,59 +236,135 @@ if (!isset($_SESSION['user_id'])) {
             list-style: none;
         }
 
+        #basket-count {
+            background-color: #ff4444;
 
-        .food-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            align-items: center;
-            padding: 100px;
-        }
-
-        .card-food {
-            border-radius: 10px;
-            width: 350px;
-            height: 500px;
-            padding: 30px 0px 50px 0px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 2px 6px;
+            font-size: 12px;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            right: 630px;
 
 
         }
 
-        .card-food img {
-            width: 100%;
-            height: 200px;
+        .items-cart img {
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
+        }
+
+        .cart-header {
             display: flex;
-            align-items: center;
-            Justify-content: center;
+            Justify-content: baseline;
+            padding: 30px;
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: baseline;
+            padding: 20px;
+            margin-left: 200px;
+            gap: 200px;
+        }
+
+        .items-cart {
+            display: flex;
+            justify-content: baseline;
+            padding: 20px;
+            margin-left: 200px;
+            gap: 200px;
+        }
+
+        .items-cart p {
+            margin-left: 10px;
+            padding-top: 60px;
 
 
         }
 
-        .card-food h3 {
+
+        .container-checkouts {
+            background-color: #f9f9f9;
+            display: flex;
+            padding: 30px;
+            height: 700px;
+            width: 400px;
+            border-radius: 10px;
+            flex-direction: column;
+        }
+
+        .row-info {
+            display: flex;
+            gap: 70px;
+        }
+
+        .item-cart-image img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+
+        }
+
+        .item-cart-image {
+            padding: 20px;
+        }
+
+        .item-cart-image h3 {
             font-size: 20px;
             font-weight: 600;
             margin: 15px 0;
             text-align: center;
         }
 
-        .card-food p {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            display: flex;
 
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+        table {
+            width: 1300px;
+
+            border-collapse: collapse;
+            margin-left: 10px;
         }
 
+        th {
+            background-color: #333;
+            color: white;
+            font-size: 20px;
+            padding: 20px;
+        }
 
-        .card-food button {
+        td {
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .container-checkouts p,
+        h3,
+        h4 {
+            padding: 10px;
+        }
+
+        .container-checkouts input {
+            margin: 10px;
+        }
+
+        .payment-card img {
+            width: 150px;
+            height: 70px;
+            font-size: 30px;
+            border-radius: 10px;
+        }
+
+        .payment-card {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+        }
+
+        .btn-submit {
             background-color: #333;
             color: white;
             padding: 10px 20px;
@@ -310,122 +373,106 @@ if (!isset($_SESSION['user_id'])) {
             margin-top: 15px;
             cursor: pointer;
             width: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-left: 100px;
             transition: all 0.3s ease 0s;
         }
 
-        .card-food button:hover {
-            background-color: red;
+        .btn-submit:hover {
+            background-color: rgb(231, 9, 9);
+        }
+
+        .total-cost {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .container-cart {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .total-cost hr {
+            border: 1px solid black;
+            width: 100px;
             color: white;
         }
 
-        @media screen and (max-width: 768px) {
-            .food-container {
-                padding: 20px;
-            }
-
-            .card-food {
-                width: 100%;
-                max-width: 300px;
-            }
-
+        .total-cost p {
+            font-weight: 700;
+            color: black;
         }
 
-        .container-cart-items {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .cart-item {
+        .total-costs {
+            gap: 10px;
             display: flex;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 8px;
+            flex-direction: column;
+
+
         }
 
-        .cart-item img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-right: 20px;
-            border-radius: 4px;
+        .total-costs hr {
+            border: 1px solid #f9f9f9;
+            width: 100px;
+            color: white;
+
         }
 
-        .item-details {
-            flex: 1;
-        }
+
 
         .quantity-controls {
             display: flex;
+            gap: 15px;
             align-items: center;
-            gap: 10px;
-            margin: 10px 0;
+            justify-content: center;
+            margin-top: 80px;
         }
+
 
         .quantity-controls button {
-            padding: 5px 15px;
-            border: none;
-            background: #007bff;
+            background-color: #333;
             color: white;
-            border-radius: 4px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            width: 30px;
+            transition: all 0.3s ease 0s;
+
         }
 
-        .remove-btn {
-            background: #dc3545;
+        .btn-removes button {
+            background-color: #333;
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
+            width: 100px;
+            height: 30px;
+            transition: all 0.3s ease 0s;
+
         }
 
-        .cart-total {
-            text-align: right;
-            margin-top: 20px;
+        .btn-removes button:hover {
+            background-color: rgb(231, 9, 9);
+        }
+
+        .cart-sidebar {
+            max-height: 600px;
+            overflow-y: auto;
             padding: 20px;
-            border-top: 2px solid #ddd;
+            margin-left: 30px;
         }
 
-        .checkout-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        .cart-sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-sidebar::-webkit-scrollbar-thumb {
+            background-color: #888;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin-top: 10px;
         }
 
-        .empty-cart {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .continue-shopping {
-            display: inline-block;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
-
-
-        #basket-count {
-            background-color: #ff4444;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-            position: absolute;
-            top: 25px;
-            right: 630px;
+        .cart-sidebar::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
         }
         </style>
 
@@ -447,7 +494,7 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <nav class="nav__link">
                 <ul>
-                    <li><a href="normal.php">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">Chefs</a></li>
                     <ul>
                         <li class="dropdown">
@@ -477,7 +524,7 @@ if (!isset($_SESSION['user_id'])) {
                     </ul>
 
                 </ul>
-                <p></p>
+
 
 
 
@@ -511,14 +558,62 @@ if (!isset($_SESSION['user_id'])) {
         </header>
 
 
-        <h1>Cart Items</h1>
+        <h1 class="cart-header">Shopping Cart</h1>
+        <div class="row-info">
 
-        <div class="container-cart-items">
-            <div id="cart-content">
-                <!-- Cart items will be loaded here dynamically -->
+
+
+            <div class="cart-sidebar">
+
+
+                <div class="container-checouts" id="cart-items">
+
+                </div>
             </div>
-        </div>
 
+            <div class="container-checkouts">
+
+                <div class="container-cart">
+                    <div class="total-cost">
+                        <h4>Cart Total</h4>
+                        <hr>
+                        <p>Subtotal</p>
+                        <hr>
+                        <p>Shipping</p>
+                        <hr>
+                        <p>Total</p>
+                        <hr>
+                    </div>
+
+                    <div class="total-costs">
+
+                    </div>
+                </div>
+
+
+
+
+                <h3>Payment Method</h3>
+                <div class="payment-card">
+                    <input type="radio" name="payment" id="creditcard" value="creditcard">
+                    <img src="creadit.jpg" alt="Credit Card">
+                </div>
+
+                <div class="payment-card">
+                    <input type="radio" name="payment" id="Gcash" value="Gcash">
+                    <img src="gcash.jpg" alt="Gcash">
+                </div>
+
+                <div class="payment-card">
+                    <input type="radio" name="payment" id="COD" value="COD">
+                    <img src="cod.jpg" alt="COD">
+
+
+                </div>
+
+                <button type="submit" class="btn-submit">Checkout</button>
+
+            </div>
 
 
 
@@ -527,18 +622,24 @@ if (!isset($_SESSION['user_id'])) {
 
 
     <script>
-    // Load cart content immediately when page loads
     document.addEventListener('DOMContentLoaded', loadCart);
 
-
-
-
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener(" DOMContentLoaded", function() {
         updateCartCount();
 
     });
+    document.querySelector('.hamburger').addEventListener('click', function() {
+        document.querySelector('.nav__link').classList.toggle('active');
+        const
+            spans = this.querySelectorAll('span');
+        spans[0].classList.toggle('rotate-45');
+        spans[1].classList.toggle('opacity-0');
+        spans[2].classList.toggle('rotate--45');
+    });
+
 
     function loadCart() {
+
         fetch('cart_operations.php', {
                 method: 'POST',
                 headers: {
@@ -552,56 +653,82 @@ if (!isset($_SESSION['user_id'])) {
     }
 
     function displayCart(data) {
-        const cartContent = document.getElementById('cart-content');
+        const cartItems = document.getElementById('cart-items');
+        const totalCostElement = document.querySelector('.total-costs'); // Target total cost container
+        let shipping = 83;
 
         if (!data.items || data.items.length === 0) {
-            cartContent.innerHTML = `
-                <div class="empty-cart">
-                    <p>Your cart is empty</p>
-                    <a href="filipinofood.php" class="continue-shopping">Continue Shopping</a>
-                </div>
-            `;
+            cartItems.innerHTML = '<h3>Cart is empty</h3>';
+            totalCostElement.innerHTML = `
+            <p>Subtotal: Php 0.00</p>
+            <hr>
+            <p>Shipping: Php 0.00</p>
+            <hr>
+            <p>Tax: Php 0.00</p>
+            <hr>
+            <p>Total: Php 0.00</p>
+            <hr>
+        `; // Set total to 0 if empty
+            shipping = 0;
+
             return;
         }
 
-        let html = '<div class="card-items">';
+        let html = '<table><tbody><tr><th>Product</th><th>Dish Type</th><th>Quantity</th><th>Price</th></tr>';
+        let totalPrice = 0; // Initialize total price
 
         data.items.forEach(item => {
-            html += `
-                <div class="cart-item" id="item-${item.id}">
-                    <img src="${item.recipeimage}" alt="${item.recipename}">
-                    <div class="item-details">
-                        <h3>${item.recipename}</h3>
-                        <p>Price: ₱${parseFloat(item.price).toFixed(2)}</p>
-                        
-                        <div class="quantity-controls">
-                            <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                            <span id="quantity-${item.id}">${item.quantity}</span>
-                            <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                        </div>
-                        
-                        <p>Item Total: ₱${(item.price * item.quantity).toFixed(2)}</p>
-                        <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
-                    </div>
-                </div>
-            `;
+            let itemTotal = item.quantity * item.price; // Calculate total for each item
+            totalPrice += itemTotal; // Add to total price
+            html += `<tr>
+            <td class="item-cart-image">
+                <h3>${item.recipename}</h3>
+                <img src="${item.recipeimage}" alt="">
+            </td>
+            <td>${item.typeofdish}</td>
+
+         <td class="quantity-controls">
+    <button type="button" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+    <span id="quantity-${item.id}">${item.quantity}</span>
+    <button type="button" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+
+    <div class="btn-removes">
+    <button  class="remove-btnss"type="button" onclick="removeFromCart(${item.id})">Remove</button>
+    
+     </div>
+    
+</td>
+
+        
+            <td>Php ${(item.price * item.quantity).toFixed(2)}</td>
+        </tr>`;
         });
 
+        html += '</tbody></table>'; // Close the table properly
+        cartItems.innerHTML = html; // Update the cart content
 
+        let finalTotal = totalPrice + shipping; // Add shipping once
 
-
-        html += `
-            <div class="cart-total">
-                <h3>Total: ₱${parseFloat(data.total).toFixed(2)}</h3>
-                <input type="button" value="Proceed to Checkout" class="checkout-btn" onclick="window.location.href='checkout.php'">
-            </div>
-        `;
-
-        cartContent.innerHTML = html;
+        totalCostElement.innerHTML = `
+        <p>Subtotal: Php ${totalPrice.toFixed(2)}</p>
+        <hr>
+        <p>Subtotal : 0</p>
+    <hr>
+        <p>Shipping: Php ${shipping.toFixed(2)}</p>
+        <hr>
+        <p>Total: Php ${finalTotal.toFixed(2)}</p>
+        <hr>
+    `;
     }
 
+
     function updateQuantity(productId, newQuantity) {
-        if (newQuantity < 1) return;
+
+
+        if (newQuantity < 1) {
+            removeFromCart(productId);
+            return;
+        }
 
         fetch('cart_operations.php', {
                 method: 'POST',
@@ -613,10 +740,13 @@ if (!isset($_SESSION['user_id'])) {
             .then(response => response.json())
             .then(displayCart)
             .catch(error => console.error('Error:', error));
+
+
     }
 
+
     function removeFromCart(productId) {
-        if (confirm('Are you sure you want to remove this item?')) {
+        if (confirm('Are you sure you want to remove this items?')) {
             fetch('cart_operations.php', {
                     method: 'POST',
                     headers: {
@@ -629,34 +759,7 @@ if (!isset($_SESSION['user_id'])) {
                 .catch(error => console.error('Error:', error));
         }
     }
-
-
-    function updateCartCount() {
-        fetch('cart_operations.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'action=get_count'
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Update the basket count
-                const basketCount = document.querySelector('#basket-count');
-                if (basketCount) {
-                    basketCount.textContent = data.count || '0';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
     </script>
-
-
-
-
-
-
-
 
 
 

@@ -85,6 +85,29 @@
             width: 600px;
             padding: 60px;
         }
+
+        .header-prod {
+            background-color: #3A8EBA;
+            display: flex;
+            justify-content: center;
+            border: 1px solid white;
+            border-radius: 3px;
+            color: white;
+            width: 300px;
+
+
+        }
+
+
+
+        .page-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 100px;
+            padding: 15px;
+
+        }
         </style>
 
     </head>
@@ -346,21 +369,13 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1>Hello, <span>Welcome Here</span></h1>
+
+                                    <h1 class="header-prod" style="font-size:25px;">Add New Recipe Desert</h1>
                                 </div>
                             </div>
                         </div>
                         <!-- /# column -->
-                        <div class="col-lg-4 p-l-0 title-margin-left">
-                            <div class="page-header">
-                                <div class="page-title">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="chef.php">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Home</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
+
                         <!-- /# column -->
                     </div>
                     <!-- /# row -->
@@ -380,13 +395,13 @@
 
 
 
-                        <form action="">
+                        <form action="adddesert_backend.php" method="POST" enctype="multipart/form-data">
 
                             <div class="image-con">
                                 <h2>Image Product</h2>
                                 <img id="image-preview" src="" alt="Recipe Image"
                                     style="display: none; width: 350px; height: 100%;">
-                                <input type="file" id="image-upload" name="recipeimage" accept="image/*" required>
+                                <input type="file" id="image-upload" name="desertimage" accept="image/*" required>
                             </div>
                             <hr>
 
@@ -399,7 +414,7 @@
                             <hr>
                             <div class="select-form">
                                 <h2>Desert Type</h2>
-                                <select name="typeofdesert" id="" required>
+                                <select name="typeofdeserts" id="" required>
                                     <option value="">Select Type Of Dish</option>
                                     <option value="Filipino">Filipino Food</option>
                                     <option value="Italian">Italian Food</option>
@@ -407,6 +422,12 @@
                                     <option value="Chinese">Chinese Food</option>
                                     <option value="American">American</option>
                                 </select>
+                            </div>
+
+                            <hr>
+                            <div class="input-form" style="width:150px;">
+                                <h2>Price</h2>
+                                <input type="number" name="price" placeholder="Enter Price">
                             </div>
 
 
@@ -425,11 +446,11 @@
 
                             <div class="text-area-form">
                                 <h2>Instruction</h2>
-                                <textarea name="description" id="" placeholder="Description" required></textarea>
+                                <textarea name="descriptions" id="" placeholder="Description" required></textarea>
 
                                 <hr>
                                 <h2>Dish Info <span>(Tell About the Dish)</span></h2>
-                                <textarea name="dishdescription" id="" placeholder="Description" required></textarea>
+                                <textarea name="aboutdeserts" id="" placeholder="Description" required></textarea>
 
                             </div>
 
@@ -482,9 +503,10 @@
 
             const container = document.getElementById('ingredients-container');
 
-            const ingredientCount = container.getElementById('input').length;
+            const ingredientCount = container.getElementsByTagName('input').length;
 
             if (ingredientCount < ordinalNames.length) {
+                const newInput = document.createElement('input');
 
                 newInput.type = 'text';
                 newInput.placeholder = `Enter Ingredient ${ingredientCount + 1}`;

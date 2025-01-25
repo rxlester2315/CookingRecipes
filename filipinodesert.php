@@ -1,3 +1,24 @@
+<?php
+// Add this at the very top of filipinofoods.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include('database.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+
+
+$sql = "SELECT id,desertname,desertimage,description,typeofdesert,aboutdesert,price,ingredients FROM deserts";
+
+
+$result = $conn->query($sql);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -288,6 +309,27 @@
             background-color: red;
             color: white;
         }
+
+        #basket-count {
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+
+        #basket {
+            position: relative;
+        }
+
+        .price-recipe {
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+        }
         </style>
 
     </head>
@@ -345,7 +387,14 @@
                 </ul>
             </nav>
             <ul class="icon-orders">
-                <li><a href=""><i class="fa-solid fa-shopping-cart"></i></a></li>
+                <div id="basket">
+                    <li>
+                        <a href="cart_items.php">
+                            <i class="fa-solid fa-shopping-cart"></i>
+                            <span id="basket-count">0</span>
+                        </a>
+                    </li>
+                </div>
                 <li><a href=""><i class="fa-solid fa-bell"></i></a></li>
             </ul>
             <div class="profile-info">
@@ -368,45 +417,58 @@
 
         <div class="desert-container">
 
-            <div class="desert-card">
-                <img src="desert/halo.jpg" alt="">
-                <h3>Filipino Halo-Halo Desert</h3>
-                <p> Halo-halo is a popular Filipino dessert with mixtures of shaved ice and evaporated milk to which are
-                    added various ingredients, including boiled sweet beans, coconut, sago, gulaman (seaweed gelatin),
-                    tubers, fruits, and yam ice cream. It is served in a tall glass or bowl.</p>
-                <button>Add Cart</button>
-
-            </div>
 
 
-            <div class="desert-card">
-                <img src="desert/halaya.jpg" alt="">
-                <h3>Ube Halaya</h3>
-                <p> Halo-halo is a popular Filipino dessert with mixtures of shaved ice and evaporated milk to which are
-                    added various ingredients, including boiled sweet beans, coconut, sago, gulaman (seaweed gelatin),
-                    tubers, fruits, and yam ice cream. It is served in a tall glass or bowl.</p>
-                <button>Add Cart</button>
-            </div>
+
+            <?php
+
+            if($result->num_rows > 0){
+                
+
+                while($row = $result->fetch_assoc()){
+
+                    if(trim(strtolower($row['typeofdesert'])) === 'filipino'){
+
+                        echo '
+                        
+                        <div class="desert-card">
+
+                        <img src ="'.htmlspecialchars($row['desertimage']). '"alt="'.htmlspecialchars($row['desertname']). '">
+                        <h3> '.htmlspecialchars($row['desertname']).'</h3>
+                        <p>'.htmlspecialchars($row['aboutdesert']).'</p>
+                           <button class="add-to-cart" data-product-id="' . htmlspecialchars($row['id']) . '">
+                        <i class="fa-solid fa-cart-shopping"></i> Add To Cart
+                    </button>
 
 
-            <div class="desert-card">
-                <img src="desert/leche.jpg" alt="">
-                <h3>Leche Flan</h3>
-                <p> Halo-halo is a popular Filipino dessert with mixtures of shaved ice and evaporated milk to which are
-                    added various ingredients, including boiled sweet beans, coconut, sago, gulaman (seaweed gelatin),
-                    tubers, fruits, and yam ice cream. It is served in a tall glass or bowl.</p>
-                <button>Add Cart</button>
-            </div>
 
 
-            <div class="desert-card">
-                <img src="desert/biko.jpg" alt="">
-                <h3>Rice Biko</h3>
-                <p> Halo-halo is a popular Filipino dessert with mixtures of shaved ice and evaporated milk to which are
-                    added various ingredients, including boiled sweet beans, coconut, sago, gulaman (seaweed gelatin),
-                    tubers, fruits, and yam ice cream. It is served in a tall glass or bowl.</p>
-                <button>Add Cart</button>
-            </div>
+
+                        </div>';
+                    }
+                }
+            }else {
+                        echo '<p>No food items found.</p>';
+
+            }
+            
+            
+            
+            
+            
+             ?>
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
 
@@ -418,6 +480,100 @@
 
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+        updateCartCount();
+
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const productId = this.getAttribute('data-product-id');
+                this.disabled = true;
+                addToCarts(productId, this);
+
+
+
+            });
+
+        });
+    });
+
+
+    function updateCartCount() {
+
+        fetch(
+                'cart_operations.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=get_count'
+                }
+            )
+            .then(response => response.json())
+            .then(data => {
+                const basketCount = document.querySelector('#basket-count');
+
+                if (basketCount) {
+                    basketCount.textContent = data.count || '0';
+                }
+            })
+
+            .catch(error => console.error('Error:', error));
+    }
+
+
+
+    function addToCarts(productId, button) {
+        fetch('cart_operations.php', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=add&product_id=${productId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.error) {
+                    alert(data.error);
+
+                    return;
+                }
+                const basketCount = document.querySelector('#basket-count');
+
+                if (basketCount) {
+                    basketCount.textContent = data.count || '0';
+
+                }
+
+                alert('Item Added to cart Successfull!');
+
+            })
+
+            .catch(error => console.error('Error:', error))
+            .finally(() => {
+
+                if (button) button.disabled = false;
+
+            })
+    }
+
+
+
+
+
+
+
+
+
+
+
     document.querySelector('.hamburger').addEventListener('click', function() {
         document.querySelector('.nav__link').classList.toggle('active');
         const spans = this.querySelectorAll('span');

@@ -98,6 +98,29 @@
         .price-form input {
             padding: 8px;
         }
+
+        .header-prod {
+            background-color: #9B59B6;
+            display: flex;
+            justify-content: center;
+            border: 1px solid white;
+            border-radius: 3px;
+            color: white;
+            width: 300px;
+
+
+        }
+
+
+
+        .page-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 100px;
+            padding: 15px;
+
+        }
         </style>
 
     </head>
@@ -360,21 +383,13 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1>Hello, <span>Welcome Here</span></h1>
+                                    <h1 class="header-prod" style="font-size:25px;">Add New Recipe Dish</h1>
+
                                 </div>
                             </div>
                         </div>
                         <!-- /# column -->
-                        <div class="col-lg-4 p-l-0 title-margin-left">
-                            <div class="page-header">
-                                <div class="page-title">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="chef.php">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Home</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
+
                         <!-- /# column -->
                     </div>
                     <!-- /# row -->
