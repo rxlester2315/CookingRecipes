@@ -474,6 +474,38 @@
         .cart-sidebar::-webkit-scrollbar-thumb:hover {
             background-color: #555;
         }
+
+
+        .payment-card {
+            display: inline-block;
+            text-align: center;
+
+        }
+
+        .payment-card label img {
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            width: 100px;
+            height: auto;
+            transition: border 0.3s ease, transform 0.2s ease;
+
+
+        }
+
+
+        .payment-card label img:hover {
+            transform: scale(1.05);
+        }
+
+        .payment-card input[type="radio"] {
+            display: none;
+        }
+
+        .payment-card input[type="radio"]:checked+label img {
+            border: 3px solid red;
+            transform: scale(1.05);
+        }
         </style>
 
     </head>
@@ -594,19 +626,27 @@
 
 
                 <h3>Payment Method</h3>
+
+
                 <div class="payment-card">
                     <input type="radio" name="payment" id="creditcard" value="creditcard">
-                    <img src="creadit.jpg" alt="Credit Card">
+                    <label for="creditcard">
+                        <img src="creadit.jpg" alt="creditcard">
+
                 </div>
 
                 <div class="payment-card">
                     <input type="radio" name="payment" id="Gcash" value="Gcash">
-                    <img src="gcash.jpg" alt="Gcash">
+                    <label for="Gcash">
+                        <img src="gcash.jpg" alt="Gcash">
+                    </label>
                 </div>
 
                 <div class="payment-card">
                     <input type="radio" name="payment" id="COD" value="COD">
-                    <img src="cod.jpg" alt="COD">
+                    <label for="COD">
+                        <img src="cod.jpg" alt="COD">
+                    </label>
 
 
                 </div>
