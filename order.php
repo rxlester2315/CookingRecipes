@@ -269,7 +269,7 @@
             <nav class="nav__link">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="order.php">Orders</a></li>
+                    <li><a href="about.php">Orders</a></li>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropbtn">Desert</a>
@@ -330,44 +330,40 @@
 
 
         </header>
+        <center>
+            <h2>Your Orders</h2>
 
+        </center>
+        <div class="orders-container">
 
+            <table>
+                <thead>
+                    <tr>
+                        >
+                        <th>Products</th>
+                        <th>Order Number</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Attributes</th>
+                    </tr>
+                </thead>
 
+                <tbody>
+                    <tr>
+                        <td>Product 1</td>
+                        <td>12345</td>
+                        <td>$100</td>
+                        <td>Shipped</td>
+                        <td>Color: Red</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div class="row">
-            <h1>Recent Dish</h1>
-            <div class="recent-order">
-                <div class="orderss">
-                    <img src="spagheti.jpg" alt="">
-                    <h3>Spaghetti</h3>
-                    <p>Spaghetti is a long, thin, solid, cylindrical pasta. It is a staple food of traditional Italian
-                        cuisine.
-                        Like other pasta, spaghetti is made of milled wheat and water and sometimes enriched with
-                        vitamins and minerals.
-                        Italian spaghetti is typically made from durum wheat semolina.</p>
-                    <button>Buy Again</button>
-                </div>
-                <div class="orderss">
-                    <img src="chickenbiryani.jpg" alt="">
-                    <h3>Chicken Biryani</h3>
-                    <p>Chicken Biryani is a delicious savory rice dish that is loaded with spicy marinated chicken,
-                        caramelized onions, and flavorful saffron rice.
-                        For my Biryani, I simplify the order of operations, while retaining the traditional layered
-                        approach to assembling it.</p>
-                    <button>Buy Again</button>
-                </div>
-                <div class="orderss">
-                    <img src="burgir.jpg" alt="">
-
-                    <h3>Chicken Burger</h3>
-                    <p>A chicken burger is a sandwich that typically consists of a boneless, skinless chicken breast
-                        served between slices of bread or on a bun.
-                        The chicken patty may be breaded or grilled, and it may also be marinated to add flavor.</p>
-                    <button>Buy Again</button>
-                </div>
-
-            </div>
         </div>
+
+
+
+
 
     </body>
 

@@ -466,6 +466,8 @@ $result = $conn->query($sql);
                         <i class="fa-solid fa-cart-shopping"></i> Add To Cart
                     </button>
                 </div>';
+
+
             }
         }
     } else {
@@ -494,7 +496,6 @@ $result = $conn->query($sql);
                 const productId = this.getAttribute('data-product-id');
                 // Disable the button temporarily to prevent double clicks
                 this.disabled = true;
-                addToCarts(productId, this);
             });
         });
     });
@@ -518,7 +519,7 @@ $result = $conn->query($sql);
             .catch(error => console.error('Error:', error));
     }
 
-    function addToCarts(productId, button) {
+    function addToCart(productId, button) {
         fetch('cart_operations.php', {
                 method: 'POST',
                 headers: {

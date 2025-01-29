@@ -624,34 +624,37 @@
 
 
 
+                <form action="checkout_backend.php" method="POST">
+                    <h3>Payment Method</h3>
 
-                <h3>Payment Method</h3>
+                    <div class="payment-card">
+                        <input type="radio" name="typeofpayment" id="creditcard" value="creditcard" required>
+                        <label for="creditcard">
+                            <img src="creadit.jpg" alt="creditcard">
+                        </label>
+                    </div>
 
+                    <div class="payment-card">
+                        <input type="radio" name="typeofpayment" id="Gcash" value="Gcash" required>
+                        <label for="Gcash">
+                            <img src="gcash.jpg" alt="Gcash">
+                        </label>
+                    </div>
 
-                <div class="payment-card">
-                    <input type="radio" name="payment" id="creditcard" value="creditcard">
-                    <label for="creditcard">
-                        <img src="creadit.jpg" alt="creditcard">
+                    <div class="payment-card">
+                        <input type="radio" name="typeofpayment" id="COD" value="COD" required>
+                        <label for="COD">
+                            <img src="cod.jpg" alt="COD">
+                        </label>
+                    </div>
 
-                </div>
+                    <div class="total-price">
+                        <input type="hidden" name="totalprice" id="totalprice" value="1000">
+                        <!-- Ensure a value is set -->
+                    </div>
 
-                <div class="payment-card">
-                    <input type="radio" name="payment" id="Gcash" value="Gcash">
-                    <label for="Gcash">
-                        <img src="gcash.jpg" alt="Gcash">
-                    </label>
-                </div>
-
-                <div class="payment-card">
-                    <input type="radio" name="payment" id="COD" value="COD">
-                    <label for="COD">
-                        <img src="cod.jpg" alt="COD">
-                    </label>
-
-
-                </div>
-
-                <button type="submit" class="btn-submit">Checkout</button>
+                    <button type="submit" name="submit" class="btn-submit">Place Order</button>
+                </form>
 
             </div>
 
@@ -748,6 +751,8 @@
         cartItems.innerHTML = html; // Update the cart content
 
         let finalTotal = totalPrice + shipping; // Add shipping once
+        document.getElementById('totalprice').value = finalTotal.toFixed(2);
+
 
         totalCostElement.innerHTML = `
         <p>Subtotal: Php ${totalPrice.toFixed(2)}</p>

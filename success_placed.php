@@ -248,6 +248,48 @@
 
 
         }
+
+        .successdisplay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .successdisplay i {
+            font-size: 50px;
+            color: white;
+            border: 1px solid green;
+            padding: 20px;
+            border-radius: 50%;
+            background-color: green;
+        }
+
+        .successdisplay p {
+            text-align: center;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .successdisplay a {
+            text-decoration: none;
+            color: black;
+            background-color: white;
+            border: 1px solid black;
+            /* Default background color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            /* Smooth transition for hover effect */
+        }
+
+        .successdisplay a:hover {
+            background-color: #333;
+            /* New background color on hover */
+            color: white;
+        }
         </style>
 
     </head>
@@ -269,7 +311,7 @@
             <nav class="nav__link">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="order.php">Orders</a></li>
+                    <li><a href="about.php">Chefs</a></li>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropbtn">Desert</a>
@@ -332,42 +374,19 @@
         </header>
 
 
+        <div class="successdisplay">
+            <i class="fa-solid fa-check"></i>
+            <h1>Order Placed Successfully!</h1>
+            <p>We recieve your Order we will ship As soon as possible <br> Order #BBT23C</p>
+
+            <a href="normal.php">Back To Home</a>
 
 
-        <div class="row">
-            <h1>Recent Dish</h1>
-            <div class="recent-order">
-                <div class="orderss">
-                    <img src="spagheti.jpg" alt="">
-                    <h3>Spaghetti</h3>
-                    <p>Spaghetti is a long, thin, solid, cylindrical pasta. It is a staple food of traditional Italian
-                        cuisine.
-                        Like other pasta, spaghetti is made of milled wheat and water and sometimes enriched with
-                        vitamins and minerals.
-                        Italian spaghetti is typically made from durum wheat semolina.</p>
-                    <button>Buy Again</button>
-                </div>
-                <div class="orderss">
-                    <img src="chickenbiryani.jpg" alt="">
-                    <h3>Chicken Biryani</h3>
-                    <p>Chicken Biryani is a delicious savory rice dish that is loaded with spicy marinated chicken,
-                        caramelized onions, and flavorful saffron rice.
-                        For my Biryani, I simplify the order of operations, while retaining the traditional layered
-                        approach to assembling it.</p>
-                    <button>Buy Again</button>
-                </div>
-                <div class="orderss">
-                    <img src="burgir.jpg" alt="">
-
-                    <h3>Chicken Burger</h3>
-                    <p>A chicken burger is a sandwich that typically consists of a boneless, skinless chicken breast
-                        served between slices of bread or on a bun.
-                        The chicken patty may be breaded or grilled, and it may also be marinated to add flavor.</p>
-                    <button>Buy Again</button>
-                </div>
-
-            </div>
         </div>
+
+
+
+
 
     </body>
 
