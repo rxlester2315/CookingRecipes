@@ -526,8 +526,8 @@
             </div>
             <nav class="nav__link">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">Chefs</a></li>
+                    <li><a href="normal.php">Home</a></li>
+                    <li><a href="order.php">Orders</a></li>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropbtn">Desert</a>
@@ -667,17 +667,8 @@
     <script>
     document.addEventListener('DOMContentLoaded', loadCart);
 
-    document.addEventListener(" DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         updateCartCount();
-
-    });
-    document.querySelector('.hamburger').addEventListener('click', function() {
-        document.querySelector('.nav__link').classList.toggle('active');
-        const
-            spans = this.querySelectorAll('span');
-        spans[0].classList.toggle('rotate-45');
-        spans[1].classList.toggle('opacity-0');
-        spans[2].classList.toggle('rotate--45');
     });
 
 
@@ -713,6 +704,7 @@
             <hr>
         `; // Set total to 0 if empty
             shipping = 0;
+            w
 
             return;
         }
@@ -790,6 +782,32 @@
     }
 
 
+
+    function updateCartCount() {
+
+        fetch(
+                'cart_operations.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=get_count'
+                }
+            )
+            .then(response => response.json())
+            .then(data => {
+                const basketCount = document.querySelector('#basket-count');
+
+                if (basketCount) {
+                    basketCount.textContent = data.count || '0';
+                }
+            })
+
+            .catch(error => console.error('Error:', error));
+    }
+
+
+
     function removeFromCart(productId) {
         if (confirm('Are you sure you want to remove this items?')) {
             fetch('cart_operations.php', {
@@ -801,9 +819,19 @@
                 })
                 .then(response => response.json())
                 .then(displayCart)
+
                 .catch(error => console.error('Error:', error));
         }
     }
+
+    document.querySelector('.hamburger').addEventListener('click', function() {
+        document.querySelector('.nav__link').classList.toggle('active');
+        const
+            spans = this.querySelectorAll('span');
+        spans[0].classList.toggle('rotate-45');
+        spans[1].classList.toggle('opacity-0');
+        spans[2].classList.toggle('rotate--45');
+    });
     </script>
 
 

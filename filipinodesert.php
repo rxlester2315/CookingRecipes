@@ -351,7 +351,7 @@ $result = $conn->query($sql);
             <nav class="nav__link">
                 <ul>
                     <li><a href="normal.php">Home</a></li>
-                    <li><a href="about.php">Chefs</a></li>
+                    <li><a href="order.php">Orders</a></li>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropbtn">Desert</a>

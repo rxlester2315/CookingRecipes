@@ -1,3 +1,16 @@
+<?php 
+
+
+include('database.php');
+
+$sql = "SELECT  recipename , descriptiondish , recipeimage, typeofdish FROM recipes ORDER BY id DESC ";
+
+
+$result = $conn->query($sql);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -168,47 +181,25 @@ http://www.templatemo.com/tm-515-eatery
             <h1>MENU</h1>
             <div class="container-recipes">
 
+
+                <?php 
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) { 
+    ?>
                 <div class="card-menus">
-                    <h3>Adobo</h3>
+                    <h3><?php echo htmlspecialchars($row['recipename']); ?></h3>
                     <div class="image-recipe">
-                        <img src="adobo.jpg" alt="Recipe Image">
+                        <img src="<?php echo htmlspecialchars($row['recipeimage']); ?>" alt="Recipe Image">
                     </div>
-                    <p>Adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat,
-                        seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black
-                        peppercorns, which is browned in oil, and simmered in the marinade.</p>
-
+                    <p><?php echo htmlspecialchars($row['descriptiondish']); ?></p>
                 </div>
+                <?php 
+        } 
+    } else {
+        echo "<p>No recipes found.</p>";
+    }
+    ?>
 
-                <div class="card-menus">
-                    <h3>Adobo</h3>
-                    <div class="image-recipe">
-                        <img src="adobo.jpg" alt="Recipe Image">
-                    </div>
-                    <p>Adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat,
-                        seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black
-                        peppercorns, which is browned in oil, and simmered in the marinade.</p>
-                </div>
-
-
-                <div class="card-menus">
-                    <h3>Adobo</h3>
-                    <div class="image-recipe">
-                        <img src="adobo.jpg" alt="Recipe Image">
-                    </div>
-                    <p>Adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat,
-                        seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black
-                        peppercorns, which is browned in oil, and simmered in the marinade.</p>
-                </div>
-
-                <div class="card-menus">
-                    <h3>Adobo</h3>
-                    <div class="image-recipe">
-                        <img src="adobo.jpg" alt="Recipe Image">
-                    </div>
-                    <p>Adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat,
-                        seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black
-                        peppercorns, which is browned in oil, and simmered in the marinade.</p>
-                </div>
 
 
             </div>

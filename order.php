@@ -1,3 +1,13 @@
+<?php
+include('database.php');
+
+
+$sql = "SELECT order_number, totalprice , status, items FROM orders ORDER BY id DESC";
+
+$result = $conn->query($sql);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -248,6 +258,126 @@
 
 
         }
+
+        .product-column img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .order-container {
+            padding: 10px;
+            max-width: 1000px;
+            border-radius: 10px;
+
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+
+        .order-table th,
+        .order-table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .order-table td {
+            background-color: #fff;
+        }
+
+        .product-column {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-details p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .table-orders {
+            width: 50%;
+            border-collapse: collapse;
+            max-width: 100%;
+            margin: 24px 0;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 100px;
+        }
+
+        .table-orders thead {
+            background-color: black;
+        }
+
+
+
+        .table-orders th {
+            padding: 16px 24px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-orders td {
+            padding: 20px 24px;
+            font-size: 14px;
+            color: #212529;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+
+
+        .table-orders td img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 16px;
+            border: 1px solid #e9ecef;
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+
+
+        .headers {
+            margin-top: 30px;
+        }
+
+        .pending-info p {
+            border: 1px solid orange;
+            color: black;
+            background-color: orange;
+            text-align: center;
+            font-style: italic;
+            border-radius: 8px;
+        }
+
+        .table-orders p {
+            color: black;
+            font-weight: 700;
+            font-size: 15px;
+
+        }
         </style>
 
     </head>
@@ -268,8 +398,8 @@
             </div>
             <nav class="nav__link">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">Orders</a></li>
+                    <li><a href="normal.php">Home</a></li>
+                    <li><a href="order.php">Orders</a></li>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropbtn">Desert</a>
@@ -330,36 +460,70 @@
 
 
         </header>
+
         <center>
-            <h2>Your Orders</h2>
-
+            <h2 class="headers">Your Orders</h2>
         </center>
-        <div class="orders-container">
+        <div class="table-container">
 
-            <table>
+
+
+            <table class="table-orders">
                 <thead>
                     <tr>
-                        >
                         <th>Products</th>
                         <th>Order Number</th>
                         <th>Total</th>
                         <th>Status</th>
-                        <th>Attributes</th>
+                        <th>Qty</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <tr>
-                        <td>Product 1</td>
-                        <td>12345</td>
-                        <td>$100</td>
-                        <td>Shipped</td>
-                        <td>Color: Red</td>
-                    </tr>
+                    <?php 
+                
+                if($result->num_rows > 0 ){
+                 while($row = $result->fetch_assoc()){
+
+
+                       $order_number = $row['order_number'];
+                    $total_price = number_format($row['totalprice'] ,2 )."PHP";
+                    $status = $row['status'];
+                    $items = json_decode($row['items'],true);
+
+
+
+                     foreach($items as $item){
+                              echo "<tr>
+                            <td class='main-info'>
+                                <img src='" . htmlspecialchars($item['imagefile']) . "' alt='Product Image'>
+                                <p>" . htmlspecialchars($item['item_name']) . "</p>
+                            </td>
+                            <td>#" . htmlspecialchars($order_number) . "</td>
+                            <td>" . htmlspecialchars($total_price) . "</td>
+                            <td class='pending-info'><p>" . htmlspecialchars($status) . "</p></td>
+                            <td><p>" . htmlspecialchars($item['quantity']) . "x</p></td>
+                          </tr>";
+                    }
+
+
+                 }
+
+
+                   
+                }else{
+                                echo "<tr><td colspan='5'>No orders found</td></tr>";
+
+                }
+                
+                
+                ?>
                 </tbody>
             </table>
-
         </div>
+
+        <?php
+$conn->close();
+?>
 
 
 

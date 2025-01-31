@@ -268,7 +268,7 @@
             </div>
             <nav class="nav__link">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="normal.php">Home</a></li>
                     <li><a href="order.php">Orders</a></li>
                     <ul>
                         <li class="dropdown">
